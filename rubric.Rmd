@@ -1,0 +1,30 @@
+---
+title: "Rubric for Oral Discussions"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+Questions with explanation will be graded as follows:
+
+Score   | Demonstration
+--------|--------------
+3       | __Excellent__ -- Outstanding ability to articulate the concepts covered in the question. Few if if any errors occur. Any errors that do occur are minor and do not cloud the understanding articulated during the answer.  
+        |     
+2       | __Good__ -- Ability to articulate the central concepts covered in the question, but errors may occur during the assessment which may cloud understanding articulated during the answer.
+        |    
+1       | __Fair__ -- Limited ability to articulate the concepts covered in the question, explanations contain inconsistencies and demonstrate limited understanding of the content.  
+        |    
+0       | __No credit__ -- Inability to present any understanding of the concepts covered in the question. 
+
+
+Questions that do not involve explanation will be graded as follows:
+
+Score   | Demonstration
+--------|--------------
+2       | __Excellent__ -- Answer is correct and optimal in light of what we learned and defined. No follow up is required to obtain clarity.
+        |     
+1       | __Fair__ -- Answer is nearly correct or is not quite optimal. Obtaining the 'best' answer requires further prompting.
+        |    
+0       | __No credit__ -- Inability to answer the question correctly.
+
