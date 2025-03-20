@@ -1,0 +1,90 @@
+---
+title: "Oral Discussion Example Program"
+author: "Justin Post"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(readxl)
+library(haven)
+```
+
+# Introduction
+
+The purpose of this document is to read some data into R and explore it briefly. Below you'll find R **code chunks** with code followed by output from that code. We use the `readr`, `readxl`, and `haven` packages as needed.
+
+# Read in Data
+
+Let's begin by reading in data from a URL. 
+
+```{r}
+air <- read_csv("https://www4.stat.ncsu.edu/~online/datasets/AirQuality.csv")
+```
+
+Now we'll read in data from a local file.
+
+```{r}
+#This data is available on the Moodle site (Resources & Information section)
+chickens <- read_excel("Chickens.xlsx") 
+```
+
+Lastly, let's bring in data from SAS.
+
+```{r}
+smoke <- read_sas("https://www4.stat.ncsu.edu/~online/datasets/smoke2003.sas7bdat")
+```
+
+# Manipulate Data
+
+Often we'll need to manipulate the data. We can use some base R commands and functions such as `[` to do so.
+
+## Air Quality
+
+Let's manipulate the air quality data.
+
+```{r}
+air[1:10, c("RH", "Date")]
+x <- c(1, 5, 10)
+air[x, ]
+```
+
+
+## Chickens
+
+Let's manipulate the chickens data.
+
+```{r}
+chickens[, 1:2]
+chickens$weightGain
+```
+
+## Chickens
+
+Let's manipulate the smoke data.
+
+```{r}
+smoke$PacksPerDay
+y <- 1:400
+smoke[-y, 1:4]
+```
+
+
+# Together
+
+Put create an R object with info about this data.
+
+```{r}
+data_names <- c("air", "chickens", "smoke")
+data_files <- list(air, chickens, smoke)
+names(data_files) <- data_names
+
+data_files[["air"]]
+data_files[[3]]
+
+columns <- list(colnames(air), colnames(chickens), colnames(smoke))
+columns[3]
+columns[[3]]
+```
+

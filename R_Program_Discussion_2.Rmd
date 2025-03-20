@@ -1,0 +1,75 @@
+---
+title: "Program for Oral Discussion 2"
+author: "Justin Post"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+
+# Reading in Data
+
+Text would go here.
+
+```{r}
+crabData <- read_tsv("https://www4.stat.ncsu.edu/~online/datasets/crabs.txt")
+crabData
+```
+
+# Manipulating Our Data
+
+Text would go here. 
+
+```{r}
+myCrabData <- crabData %>%
+  select(-satell) %>% 
+  rename("satellite" = "y") %>% 
+  mutate(shell = if_else(color == 2, "Light", 
+                         if_else(color == 3, "Medium",
+                                 if_else(color == 4, "Dark", 
+                                         "Darker"))),
+         satellite = factor(satellite, labels = c("No", "Yes"))
+         ) %>%
+  arrange(weight, width)  %>%
+  filter(spine != 1) %>%
+  select(satellite, shell, everything())
+```
+
+# Summarizing Our Data
+
+Text would go here.
+
+```{r}
+myCrabData %>% 
+  group_by(shell, satellite) %>% 
+  summarise(count = n()) %>% 
+  pivot_wider(names_from = shell, values_from = count)
+
+myCrabData %>% 
+  group_by(shell) %>%
+  summarize(med_width = median(width),
+            med_weight = median(weight),
+            IQR_width = IQR(width),
+            IQR_weight = IQR(weight)
+            )
+```
+
+More text.
+
+```{r}
+g <- ggplot(myCrabData, aes(x = satellite, y = width))
+g + 
+  geom_boxplot() +
+  geom_jitter(color = "Green") 
+
+g + 
+  geom_boxplot() +
+  geom_jitter(color = "Green") +
+  facet_grid(~shell) + 
+  theme_classic()
+```

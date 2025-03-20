@@ -1,0 +1,72 @@
+---
+title: "Example Program for Oral Discussion 2"
+author: "Justin Post"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+
+# Reading in Data
+
+Text would go here.
+
+```{r}
+wineData <- read_csv("https://www4.stat.ncsu.edu/~online/datasets/winequality-full.csv")
+wineData
+```
+
+# Manipulating Our Data
+
+Text would go here. 
+
+```{r}
+myWineData <- wineData %>%
+  filter(`fixed acidity` > 8) %>%
+  arrange(desc(`fixed acidity`)) %>% 
+  rename("fixedAcidity" = `fixed acidity`, 
+         "volatileAcidity" = `volatile acidity`,
+         "freeSulfurDioxide" = `free sulfur dioxide`,
+         "totalSulfurDioxide" = `total sulfur dioxide`)  %>%
+  select(ends_with("Acidity"), ends_with("Dioxide"), alcohol, quality, type) %>% 
+  mutate(fixedSulfurDioxide = totalSulfurDioxide - freeSulfurDioxide, 
+         categorizedFixedAcidity = cut(fixedAcidity, breaks = c(0, 4, 7, 10, 16)))
+```
+
+# Summarizing Our Data
+
+Text would go here.
+
+```{r}
+myWineData %>% 
+  group_by(type, quality) %>% 
+  summarise(count = n()) %>% 
+  pivot_wider(names_from = type, values_from = count)
+
+myWineData %>% 
+  group_by(type) %>%
+  summarize(mean = mean(alcohol), 
+            sd = sd(alcohol), 
+            count = n(),
+            cor = cor(alcohol, quality)
+            )
+```
+
+More text.
+
+```{r}
+g <- ggplot(myWineData, aes(x = alcohol, y = freeSulfurDioxide))
+g + 
+  geom_point(aes(col = quality)) +
+  geom_smooth(color = "Blue", aes(linetype = type)) 
+
+g + 
+  geom_point(aes(col = quality)) +
+  facet_grid(~ categorizedFixedAcidity) +
+  theme_classic()
+```
